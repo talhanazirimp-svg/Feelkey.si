@@ -10,6 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Unzip project
+        run: unzip -q MoodKeysAI_v0.2.zip
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -19,9 +22,11 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - run: gradle assembleDebug
+      - name: Build
+        working-directory: MoodKeysAI
+        run: gradle assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: MoodKeysAI-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: MoodKeysAI/app/build/outputs/apk/debug/app-debug.apk
